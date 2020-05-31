@@ -25,12 +25,24 @@ while True:
         print('PowerOnline:       ' + str(b.PowerOnline))
         print('Discharging:       ' + str(b.Discharging))
         print('Charging:          ' + str(b.Charging))
-        print('Voltage:           ' + str(b.Voltage))
-        print('DischargeRate:     ' + str(b.DischargeRate))
-        print('ChargeRate:        ' + str(b.ChargeRate))
-        print('RemainingCapacity: ' + str(b.RemainingCapacity))
+        print('Voltage:           ' + str(b.Voltage / 1000) + ' V')
+        print('DischargeCurrent:  ' + str(b.DischargeRate / b.Voltage) + ' A')
+        print('ChargeCurrent:     ' + str(b.ChargeRate / b.Voltage) + ' A')
+        print('DischargeRate:     ' + str(b.DischargeRate / 1000) + ' W')
+        print('ChargeRate:        ' + str(b.ChargeRate / 1000) + ' W')
+        print('RemainingCapacity: ' + str(b.RemainingCapacity / 1000) + ' W')
         print('Active:            ' + str(b.Active))
         print('Critical:          ' + str(b.Critical))
+        if b.Discharging:
+            rate = (b.RemainingCapacity / b.DischargeRate) * 60
+            hours = int(rate // 60)
+            minutes = int(rate - (hours * 60))
+            print('Time               {}:{}'.format(hours, minutes))
+        else:
+            rate = (b.RemainingCapacity / b.ChargeRate) * 60
+            hours = int(rate // 60)
+            minutes = int(rate - (hours * 60))
+            print('Time               {}:{}'.format(hours, minutes))
 
         sleep(5)
 
